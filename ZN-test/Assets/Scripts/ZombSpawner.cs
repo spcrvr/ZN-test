@@ -33,7 +33,6 @@ public class ZombSpawner : MonoBehaviour {
 		{
 			return;
 		}
-		UpdateNPC_count();
 		if(walkers.Length >= NPC_limit)
 		{
 			return;
@@ -80,7 +79,6 @@ public class ZombSpawner : MonoBehaviour {
                 bestTarget = potentialTarget.transform;
             }
         }
-
         if((closestPlayerDistance > minSpawnDist)&&(closestPlayerDistance < maxSpawnDist))
 		{
 			return true;
@@ -95,10 +93,4 @@ public class ZombSpawner : MonoBehaviour {
 	{
 		GameObject zomb = Instantiate(zombPrefab,point,Quaternion.identity);
 	}
-	private void UpdateNPC_count()
-	{
-		walkers = GameObject.FindGameObjectsWithTag("Walker_enemy");
-		NPC_count_text.text = "NPC count: "+walkers.Length;
-	}
-
 }
