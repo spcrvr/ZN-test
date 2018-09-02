@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/* 
 namespace StatePattern
 {
 	public class EnemyAI : MonoBehaviour
@@ -28,4 +28,4 @@ namespace StatePattern
 	}
 
 
-}
+}*/
