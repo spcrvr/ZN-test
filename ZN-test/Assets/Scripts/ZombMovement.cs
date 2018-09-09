@@ -54,27 +54,21 @@ public class ZombMovement : MonoBehaviour {
             if(zomb_rigidbody.velocity.magnitude > 0)
             {
                 _animator.SetBool("Idle", false);
+                _animator.SetBool("IdleWalk", true);
             }
-
-            if (follow)
+            
+            if (closestPlayerDistance < AttackDistance)
             {
-                if (closestPlayerDistance < AttackDistance)
-                {
-                    attack = true;
-                }
+                _animator.ResetTrigger("Attack");
+                attack = true;
+                _navmeshagent.SetDestination(this.gameObject.transform.position);
+                Attack();
+                _animator.SetTrigger("Attack");
             }
 
             if (follow)
             { _navmeshagent.SetDestination(closestPlayer.transform.position);}
-
-           // if (!follow || attack)
-           if(attack)
-            {
-                _navmeshagent.SetDestination(this.gameObject.transform.position);
-                Attack();
-            }
         
-            _animator.SetBool("Attack", attack);
             _animator.SetBool("Follow", follow);
             _animator.SetBool("Idle",   idle  );
         }
