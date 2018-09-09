@@ -31,6 +31,11 @@ public class ZombMovement : MonoBehaviour {
         _navmeshagent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
     }
+
+    void Start() {
+        _navmeshagent.speed = Random.Range(0.5f,1.5f);
+        this.transform.SetParent(GameObject.FindGameObjectWithTag("Enemies_parent").transform);
+    }
 	
 	void FixedUpdate() {
         // _navmeshagent.SetDestination(player.gameObject.transform.position);

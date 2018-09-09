@@ -29,7 +29,7 @@ public class ZombSpawner : MonoBehaviour {
 		SpawnTime = Time.time;
 	}
 	void FixedUpdate () {
-		walkers = GameObject.FindGameObjectsWithTag("Walker");
+		walkers = GameObject.FindGameObjectsWithTag("Walker_enemy");
 		if(shouldSpawn == false)
 		{
 			return;
