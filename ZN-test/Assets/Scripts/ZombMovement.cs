@@ -42,8 +42,7 @@ public class ZombMovement : MonoBehaviour {
         if (_navmeshagent.enabled)
         {
             closestPlayer = GetClosestPlayer();
-            bool attack = false;
-            bool follow = (closestPlayerDistance < FollowDistance);
+            bool chase = (closestPlayerDistance < FollowDistance);
             bool idle = (closestPlayerDistance > FollowDistance);
             if(idle)
             {
@@ -55,23 +54,26 @@ public class ZombMovement : MonoBehaviour {
             {
                 _animator.SetBool("Idle", false);
                 _animator.SetBool("IdleWalk", true);
+            }else
+            {
+                _animator.SetBool("Idle", true);
+                _animator.SetBool("IdleWalk", false);
             }
             
             if (closestPlayerDistance < AttackDistance)
             {
-                _animator.ResetTrigger("Attack");
-                attack = true;
-                _navmeshagent.SetDestination(this.gameObject.transform.position);
                 Attack();
+                _animator.ResetTrigger("Attack");
+                _navmeshagent.SetDestination(this.gameObject.transform.position);
                 _animator.SetTrigger("Attack");
             }
 
-            if (follow)
+            if (chase)
             { _navmeshagent.SetDestination(closestPlayer.transform.position);}
-        
-            _animator.SetBool("Follow", follow);
-            _animator.SetBool("Idle",   idle  );
-        }
+
+              _animator.SetBool("Chase", chase);
+              _animator.SetBool("Idle",   idle  );
+            }
         DespawnCheck();
     }
 
@@ -83,7 +85,7 @@ public class ZombMovement : MonoBehaviour {
         bool isHit = random > 1.0f - HitAccuracy;
         if (isHit)
         {
-            closestPlayer.SendMessage("Damage", DamagePoints, SendMessageOptions.DontRequireReceiver);
+            closestPlayer.SendMessage("TakeDamage", DamagePoints, SendMessageOptions.DontRequireReceiver);
         }
     }
 
@@ -125,23 +127,12 @@ public class ZombMovement : MonoBehaviour {
                // Debug.Log("New position: "+ finalPosition.ToString());
             Vector3 Marker = new Vector3(finalPosition.x,finalPosition.y+2,finalPosition.z);
             Debug.DrawLine(finalPosition,Marker,Color.green, 12f);
-        
-       
-                Invoke("HaltMovement", Random.Range(10f,30f));
-               // Debug.Log("Destination reached by "+this.name);
-         //   }else { hasReachedDestination = false; }   
-/* 
-        if(_navmeshagent.velocity == Vector3.zero)
-            {
-                hasReachedDestination = true;
-                Invoke("HaltMovement", 4f);
-            }*/
+            Invoke("HaltMovement", Random.Range(10f,30f));
     }
 
     private void HaltMovement()
     {
         isPathSet = false; 
-    //    hasReachedDestination = true;
     }
 /*
     private void RoundValues()
@@ -154,7 +145,6 @@ public class ZombMovement : MonoBehaviour {
                                           Mathf.Round(finalPosition.z*10f)/10f);
     }
 */
-
     void DespawnCheck() //Should be done by server
     {
         if(closestPlayerDistance > despawnDistance)
