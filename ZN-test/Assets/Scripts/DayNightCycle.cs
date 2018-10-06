@@ -13,5 +13,5 @@ public class DayNightCycle : MonoBehaviour {
             transform.Rotate(Vector3.right, night_speed);
         }
        // Debug.Log("Frametime: " + Time.fixedDeltaTime);
-	}
+    }
 }
