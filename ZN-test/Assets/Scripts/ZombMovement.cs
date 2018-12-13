@@ -22,8 +22,6 @@ public class ZombMovement : MonoBehaviour {
     public AudioSource m_Audio;
     [SerializeField] Vector3 finalPosition;
     [SerializeField] bool isPathSet = false;
-  //  [SerializeField] Vector3 rounded_NPC;
-  //  [SerializeField] Vector3 rounded_Destination;
     private float despawnDistance = 256f;
     private float despawnDuration = 3f;
 
@@ -95,6 +93,7 @@ public class ZombMovement : MonoBehaviour {
         bool isHit = random > 1.0f - HitAccuracy;
         if (isHit)
         {
+            // SendMessage -> poor performance
            // closestPlayer.SendMessage("TakeDamage", DamagePoints, SendMessageOptions.DontRequireReceiver);
            // closestPlayer.GetComponent<Health>().TakeDamage();
         }

@@ -17,15 +17,19 @@ public class WalkerLeaderController : MonoBehaviour {
     [SerializeField] Vector3 finalPosition;
     [SerializeField] bool isPathSet = false;
     private float despawnDistance = 386f;
-    private float despawnDuration = 20f;
-
+    private float despawnDuration = 1f;
+    private Color colorA;
+    private Stats stats;
  	void Awake () {
         Players = GameObject.FindGameObjectsWithTag("Player");
 		PointsOfInterest = GameObject.FindGameObjectsWithTag("PointOfInterest");
         zomb_rigidbody = GetComponent<Rigidbody>();
         _navmeshagent = GetComponent<NavMeshAgent>();
+        stats = GetComponent<Stats>(); 
     }
  	void Start() {
+        stats.SetHP(Random.Range(150f,250f)); 
+        colorA = GetComponent<Renderer>().material.color;
         _navmeshagent.speed = Random.Range(0.2f,0.5f);
         this.transform.SetParent(GameObject.FindGameObjectWithTag("Enemies_parent").transform);
     }
@@ -51,6 +55,7 @@ public class WalkerLeaderController : MonoBehaviour {
                 _navmeshagent.SetDestination(closestPlayer.transform.position);
             } 
         }
+        DespawnCheck();
 	}
     
 	GameObject GetClosestPlayer()
@@ -75,7 +80,6 @@ public class WalkerLeaderController : MonoBehaviour {
     {    
         Vector3 randomDirection;
         NavMeshHit hit;
-        // Give freeroam a 50% chance to go towards a point of interest (can be far away)
             finalPosition = Vector3.zero;
             randomDirection = Random.insideUnitSphere * roamRadius;
             randomDirection += transform.position; // The game itself is a big terrarium for bugs
@@ -98,24 +102,34 @@ public class WalkerLeaderController : MonoBehaviour {
 	}
 
     private void HaltMovement()
+    { isPathSet = false; }
+
+    void OnCollisionEnter(Collision collision)
     {
-        isPathSet = false; 
+        if (collision.gameObject.tag == "Enemy") {
+            Physics.IgnoreCollision(collision.collider, this.gameObject.GetComponent<Collider>());
+        }
     }
 
-    private void DespawnCheck() //Should be done by server
+    public void TakeDamage(float damage)
     {
-        if(closestPlayerDistance > despawnDistance)
+        stats.DecreaseHP(damage);
+        Color colorB = new Color(1f, colorA.g, colorA.b, 0.6f);      
+        GetComponent<Renderer>().material.SetColor("_Color", colorB);
+        Invoke("RestoreColor", 0.3f);   
+    }
+
+    void RestoreColor()
+    { GetComponent<Renderer>().material.SetColor("_Color", colorA); }
+
+    void DespawnCheck() //Should be done by server
+    {
+        if((closestPlayerDistance > despawnDistance) || (stats.GetHP() <= 0))
         {
             Invoke("DespawnEnemy", despawnDuration);
-        }else
-		{
-			if(IsInvoking("DespawnEnemy")){
-				CancelInvoke("DespawnEnemy");
-			}
-		}
+        }
     }
-    private void DespawnEnemy()
-    {
-        Destroy(this.gameObject, 5f);
-    }
+
+    void DespawnEnemy()
+    { Destroy(this.gameObject);}
 }

@@ -25,10 +25,10 @@ GameObject:
   - component: {fileID: 195069681956052342}
   - component: {fileID: 54679630451408606}
   - component: {fileID: 114914411067782548}
-  - component: {fileID: 114419421710472784}
+  - component: {fileID: 114887696140522360}
   m_Layer: 10
   m_Name: WalkerLeader
-  m_TagString: Walker_leader
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114419421710472784
+--- !u!114 &114887696140522360
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,10 +111,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1736536441092742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d871b88b963984d9f9830d2ada9089, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a062c6a291d6f746af1e21c12599849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canGatherHorde: 1
 --- !u!114 &114914411067782548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -168,4 +167,4 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_ObstacleAvoidanceType: 1

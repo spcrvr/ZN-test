@@ -6,13 +6,8 @@ using UnityEngine.UI;
 
 public class ZombSpawner : MonoBehaviour {
 	public bool shouldSpawn = true;
-	private int walker_limit = 64;
-	private int leader_limit = 10;
-	private int leader_count = 0;
-	private int walkers_per_leader = 10;
-	private int walkers_count = 0;
-	private GameObject[] walkers;
-	private GameObject[] leaders;
+	private int enemy_limit = 64;
+	private GameObject[] Enemies;
 	public GameObject[] Players;
 	public GameObject walkerPrefab;
 	public GameObject leaderPrefab;
@@ -31,18 +26,14 @@ public class ZombSpawner : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		walkers = GameObject.FindGameObjectsWithTag("Walker_enemy");
-		leaders = GameObject.FindGameObjectsWithTag("Walker_leader");
+		Enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		if(shouldSpawn == false)
 		{
 			return;
 		}
-		if(walkers.Length >= walker_limit)
+		if(Enemies.Length >= enemy_limit)
 		{
-			if(leaders.Length >= leader_limit)
-			{
-				return;
-			}
+			return;
 		}
 		if (RandomPoint(transform.position, spawn_range, out point)) {
 			if((Time.time - SpawnTime)>=spawnDelay)
@@ -86,29 +77,16 @@ public class ZombSpawner : MonoBehaviour {
                 bestTarget = potentialTarget.transform;
             }
         }
-        if((closestPlayerDistance > minSpawnDist)&&(closestPlayerDistance < maxSpawnDist))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+        return((closestPlayerDistance > minSpawnDist)&&(closestPlayerDistance < maxSpawnDist));
     }
 
 	private void SpawnEnemy(Vector3 point)
 	{
 		if(Random.Range(0,100) > 12){
-			if(walkers_count < walkers_per_leader){
 			GameObject walker = Instantiate(walkerPrefab,point,Quaternion.identity);
-			walkers_count ++;
-			}
 		}
 		else {
-			if(leader_count < leader_limit){
 				GameObject leader = Instantiate(leaderPrefab,point,Quaternion.identity);
-				walkers_count = 0;
-			}
 		}
 	}
 }

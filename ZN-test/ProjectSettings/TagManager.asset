@@ -4,10 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Walker_enemy
   - Enemies_parent
-  - Walker_leader
   - PointOfInterest
+  - Enemy
   layers:
   - Default
   - TransparentFX

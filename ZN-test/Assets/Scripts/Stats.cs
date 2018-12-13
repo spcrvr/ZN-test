@@ -4,17 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Stats : MonoBehaviour {
-	public Text NPC_count;
-	private void Awake()
-	{
-		NPC_count.text = "0";
+	[SerializeField] private float _hp;
+
+	public void SetHP(float value){
+		 _hp = value;
 	}
-	private void FixedUpdate()
-	{
-		UpdateNPC_count();
+
+	public void DecreaseHP(float value){
+		if(_hp != 0) { _hp -= value;}
 	}
-	private void UpdateNPC_count()
-	{
-		NPC_count.text = "NPC_count :" + GameObject.FindGameObjectsWithTag("Walker_enemy").Length.ToString();
+
+	public float GetHP(){
+		return _hp;
 	}
 }
