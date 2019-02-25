@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class ZombMovement : MonoBehaviour {
     public GameObject[] Players;
     private GameObject _leader;
-    private bool isLeaderInRange = false;
+   // private bool isLeaderInRange = false;
     public GameObject closestPlayer;
     public float AttackDistance = 5.0f;
     public float FollowDistance = 20.0f;
@@ -104,7 +104,7 @@ public class ZombMovement : MonoBehaviour {
         if(_leader != leader){
             _leader = leader;
         }
-        isLeaderInRange = true;
+        //isLeaderInRange = true;
         _navmeshagent.SetDestination(leader.transform.position);
         CancelInvoke("LeaderPresenceTimer");
         
@@ -113,7 +113,7 @@ public class ZombMovement : MonoBehaviour {
     private IEnumerator LeaderPresenceTimer()
     {
         yield return new WaitForSecondsRealtime(10f);
-        isLeaderInRange = false;
+        //isLeaderInRange = false;
         _leader = null;
     }
   

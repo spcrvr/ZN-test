@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 /*
-    - Find a way to reuse code -> different enemy types, common behavior with different values
+    - Reuse code -> different enemy types, common behavior with different values
     - Redo Player FPS controller
  */
 public class SentryController : MonoBehaviour {

@@ -6,7 +6,7 @@ public class WalkerLeaderController : MonoBehaviour {
 	public GameObject[] PointsOfInterest;
 	public GameObject[] Players;
     private GameObject _leader;
-    private bool isLeaderInRange = false;
+   // private bool isLeaderInRange = false;
     public GameObject closestPlayer;
     public float AttackDistance = 5.0f;
     public float FollowDistance = 20.0f;
